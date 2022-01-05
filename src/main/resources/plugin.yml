@@ -1,0 +1,16 @@
+name: StructureProtection
+version: '${project.version}'
+main: com.scrappymc.structureprotection.StructureProtection
+api-version: 1.18
+authors: [ Hypermoron ]
+description: Protects spawners and lootable containers
+
+permissions:
+  structureprotection.breaklootables:
+    default: op
+  structureprotection.breaklootables.confirm:
+    default: false
+  structureprotection.breakspawners:
+    default: op
+  structureprotection.breakspawners.confirm:
+    default: false

@@ -109,6 +109,7 @@ public final class StructureProtection extends JavaPlugin implements Listener {
                 if (!getConfig().getBoolean("lootables.protect-from-players")
                         || player.hasPermission("structureprotection.breaklootables")) {
                     return false;
+                // If the player has the breaklootables.confirm permission and has received a warning message within <30 seconds, allows the block to be broken
                 } else if (player.hasPermission("structureprotection.breaklootables.confirm")
                         && lootableWarningTimes.getOrDefault(player.getUniqueId(), 0L) >= System.currentTimeMillis() / 1000 - 30) {
                     lootableWarningTimes.put(player.getUniqueId(), System.currentTimeMillis() / 1000);
@@ -118,6 +119,7 @@ public final class StructureProtection extends JavaPlugin implements Listener {
                 return false;
             }
 
+            // Cancels protection if world whitelist is used and current world isn't on it, or the current world is blacklisted
             if (getConfig().getBoolean("lootables.worlds.limit-worlds")) {
                 if (getConfig().getStringList("lootables.worlds.whitelist").contains(world.getName())
                         == getConfig().getBoolean("lootables.worlds.blacklist-mode")) {
@@ -136,6 +138,7 @@ public final class StructureProtection extends JavaPlugin implements Listener {
             if (!getConfig().getBoolean("spawners.protect-from-players")
                     || player.hasPermission("structureprotection.breakspawners")) {
                 return false;
+            // If the player has the breakspawners.confirm permission and has received a warning message within <30 seconds, allows the block to be broken
             } else if (player.hasPermission("structureprotection.breakspawners.confirm")
                     && spawnerWarningTimes.getOrDefault(player.getUniqueId(), 0L) >= System.currentTimeMillis() / 1000 - 30) {
                 spawnerWarningTimes.put(player.getUniqueId(), System.currentTimeMillis() / 1000);
@@ -145,12 +148,14 @@ public final class StructureProtection extends JavaPlugin implements Listener {
             return false;
         }
 
+        // Cancels protection if entity type whitelist is used and this spawner isn't on it, or this spawner type is blacklisted
         if (getConfig().getBoolean("spawners.entity-types.limit-entity-types")
                 && getConfig().getStringList("spawners.entity-types.whitelist").contains(spawner.getSpawnedType().toString())
                 == getConfig().getBoolean("spawners.entity-types.blacklist-mode")) {
             return false;
         }
 
+        // Cancels protection if world whitelist is used and current world isn't on it, or the current world is blacklisted
         if (getConfig().getBoolean("spawners.worlds.limit-worlds")
                 && getConfig().getStringList("spawners.worlds.whitelist").contains(spawner.getWorld().getName())
                 == getConfig().getBoolean("spawners.worlds.blacklist-mode")) {

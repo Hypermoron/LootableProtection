@@ -31,5 +31,6 @@ spawners:
     limit-worlds: false
     whitelist:
       - world
+      - world_nether
       - world_the_end
     blacklist-mode: false
